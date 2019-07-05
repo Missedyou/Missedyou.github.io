@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on site title</title>
+    <link>https://missedyou.github.io/tags/</link>
+    <description>Recent content in Tags on site title</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 09 Apr 2019 09:44:42 +0800</lastBuildDate>
+    
+	<atom:link href="https://missedyou.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>MySQL</title>
+      <link>https://missedyou.github.io/tags/mysql/</link>
+      <pubDate>Tue, 09 Apr 2019 09:44:42 +0800</pubDate>
+      
+      <guid>https://missedyou.github.io/tags/mysql/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://missedyou.github.io/tags/linux/</link>
+      <pubDate>Thu, 28 Mar 2019 09:44:42 +0800</pubDate>
+      
+      <guid>https://missedyou.github.io/tags/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python-base</title>
+      <link>https://missedyou.github.io/tags/python-base/</link>
+      <pubDate>Mon, 18 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://missedyou.github.io/tags/python-base/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>git</title>
+      <link>https://missedyou.github.io/tags/git/</link>
+      <pubDate>Mon, 17 Jul 2017 10:27:05 +0800</pubDate>
+      
+      <guid>https://missedyou.github.io/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>服务器</title>
+      <link>https://missedyou.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
+      <pubDate>Sun, 16 Jul 2017 09:44:42 +0800</pubDate>
+      
+      <guid>https://missedyou.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mysql安装</title>
+      <link>https://missedyou.github.io/tags/mysql%E5%AE%89%E8%A3%85/</link>
+      <pubDate>Tue, 11 Jul 2017 14:20:39 +0800</pubDate>
+      
+      <guid>https://missedyou.github.io/tags/mysql%E5%AE%89%E8%A3%85/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

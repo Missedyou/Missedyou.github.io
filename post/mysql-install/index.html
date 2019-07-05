@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		 
+			
+  
+    <meta name="twitter:card" content="summary"/>
+    
+      <meta name="twitter:image" content="https://missedyou.github.io/images/avatar.png" />
+    
+  
+  
+  <meta name="twitter:title" content="Centos7下安装mysql"/>
+  <meta name="twitter:description" content=""/>
+  
+  
+  
+  
+    <meta name="twitter:creator" content="@ch.chen"/>
+  
+
+
+
+		
+		<meta name="author" content="ch.chen">
+		<meta name="description" content="Site Description">
+		<meta name="generator" content="Hugo 0.55.6" />
+		<title>Centos7下安装mysql &middot; site title</title>
+		<link rel="shortcut icon" href="https://missedyou.github.io/images/favicon.ico">
+		<link rel="stylesheet" href="https://missedyou.github.io/css/style.css">
+		<link rel="stylesheet" href="https://missedyou.github.io/css/highlight.css">
+
+		
+		<link rel="stylesheet" href="https://missedyou.github.io/css/font-awesome.min.css">
+		
+
+		
+		<link href="https://missedyou.github.io/index.xml" rel="alternate" type="application/rss+xml" title="site title" />
+		
+
+		
+	</head>
+
+    <body>
+       <nav class="main-nav">
+	
+	
+		<a href='https://missedyou.github.io/'> <span class="arrow">←</span>Home</a>
+	
+	<a href='https://missedyou.github.io/posts'>Archive</a>
+	<a href='https://missedyou.github.io/tags'>Tags</a>
+	<a href='https://missedyou.github.io/about'>About</a>
+
+	
+
+	
+	<a class="cta" href="https://missedyou.github.io/index.xml">Subscribe</a>
+	
+</nav>
+
+
+        <section id="wrapper" class="post">
+            <article>
+                <header>
+                    <h1>
+                        Centos7下安装mysql
+                    </h1>
+                    <h2 class="headline">
+                    Jul 11, 2017 14:20
+                    · 67 words
+                    · 1 minute read
+                      <span class="tags">
+                      
+                      
+                          
+                              <a href="https://missedyou.github.io/tags/mysql%E5%AE%89%E8%A3%85">mysql安装</a>
+                          
+                      
+                      
+                      </span>
+                    </h2>
+                </header>
+                
+                  
+                    <div id="toc">
+                      <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#添加mysql-yum源">添加mysql yum源</a></li>
+<li><a href="#安装mysql5-7">安装mysql5.7</a></li>
+<li><a href="#查看版本信息">查看版本信息</a></li>
+<li><a href="#常用命令">常用命令:</a></li>
+<li><a href="#修改初始密码">修改初始密码</a></li>
+<li><a href="#添加远程连接帐号">添加远程连接帐号</a></li>
+<li><a href="#修改编码方式">修改编码方式</a></li>
+</ul></li>
+</ul>
+</nav>
+                    </div>
+                  
+                
+                <section id="post-body">
+                    <h2 id="添加mysql-yum源">添加mysql yum源</h2>
+
+<blockquote>
+<ul>
+<li><code>yum localinstall http://dev.mysql.com/get/mysql57-community-release-el7-7.noarch.rpm</code></li>
+</ul>
+</blockquote>
+
+<h2 id="安装mysql5-7">安装mysql5.7</h2>
+
+<blockquote>
+<ul>
+<li><code>yum install mysql-community-server -y</code></li>
+</ul>
+</blockquote>
+
+<h2 id="查看版本信息">查看版本信息</h2>
+
+<blockquote>
+<ul>
+<li><code>mysqld --version</code></li>
+</ul>
+</blockquote>
+
+<h2 id="常用命令">常用命令:</h2>
+
+<p>开机自起:&emsp;<code>systemctl enable mysqld.service</code></p>
+
+<p>启动:&emsp;&emsp;&ensp;&ensp;<code>systemctl start mysqld.service</code></p>
+
+<p>停止:&emsp;&emsp;&ensp;&ensp;<code>systemctl stop mysqld.service</code></p>
+
+<p>停止:&emsp;&emsp;&ensp;&ensp;<code>systemctl stop mysqld.service</code></p>
+
+<h2 id="修改初始密码">修改初始密码</h2>
+
+<p>获取初始密码：<code>grep 'temporary password' /var/log/mysqld.log</code></p>
+
+<p>进入命令行：  <code>mysql -uroot -p</code></p>
+
+<p>修改初始密码：<code>ALTER USER 'root'@'localhost' IDENTIFIED BY 'newpwd';</code></p>
+
+<h2 id="添加远程连接帐号">添加远程连接帐号</h2>
+
+<ul>
+<li><p><code>GRANT ALL PRIVILEGES ON *.* TO 'newname'@'%' IDENTIFIED BY 'newpwd' WITH GRANT OPTION;</code></p></li>
+
+<li><p>在阿里云安全组给3306端口配置准入规则，配置授权对象为：<code>0.0.0.0/0</code></p></li>
+
+<li><p>在可视化工具中host为服务器公网IP， 端口<code>3306</code></p></li>
+</ul>
+
+<h2 id="修改编码方式">修改编码方式</h2>
+
+<ul>
+<li>vim /etc/my.cnf</li>
+
+<li><p>新增并保存：</p>
+
+<pre><code>	character-set-server=utf8
+	init_connect='SET NAMES utf8 
+</code></pre></li>
+
+<li><p>重启mysql服务</p></li>
+</ul>
+                </section>
+            </article>
+
+            
+                <a class="twitter" href="https://twitter.com/intent/tweet?text=https%3a%2f%2fmissedyou.github.io%2fpost%2fmysql-install%2f - Centos7%e4%b8%8b%e5%ae%89%e8%a3%85mysql "><span class="icon-twitter"> tweet</span></a>
+
+<a class="facebook" href="#" onclick="
+    window.open(
+      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+      'facebook-share-dialog',
+      'width=626,height=436');
+    return false;"><span class="icon-facebook-rect"> Share</span>
+</a>
+
+            
+
+            
+                <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'your_disqus_short_name'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+            
+
+            
+
+            <footer id="footer">
+    
+    <p class="small">
+    
+       © Copyright 2019 <i class="fa fa-heart" aria-hidden="true"></i> ch.chen
+    
+    </p>
+    <p class="small">
+        Powered by <a href="http://www.gohugo.io/">Hugo</a> Theme By <a href="https://github.com/nodejh/hugo-theme-cactus-plus">nodejh</a>
+    </p>
+</footer>
+
+        </section>
+
+        <script src="https://missedyou.github.io/js/jquery-3.3.1.min.js"></script>
+<script src="https://missedyou.github.io/js/main.js"></script>
+<script src="https://missedyou.github.io/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'your_google_analytics_id', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+
+
+
+    </body>
+</html>

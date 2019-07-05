@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		 
+			
+  
+    <meta name="twitter:card" content="summary"/>
+    
+      <meta name="twitter:image" content="https://missedyou.github.io/images/avatar.png" />
+    
+  
+  
+  <meta name="twitter:title" content="ssh免密登陆"/>
+  <meta name="twitter:description" content=""/>
+  
+  
+  
+  
+    <meta name="twitter:creator" content="@ch.chen"/>
+  
+
+
+
+		
+		<meta name="author" content="ch.chen">
+		<meta name="description" content="Site Description">
+		<meta name="generator" content="Hugo 0.55.6" />
+		<title>ssh免密登陆 &middot; site title</title>
+		<link rel="shortcut icon" href="https://missedyou.github.io/images/favicon.ico">
+		<link rel="stylesheet" href="https://missedyou.github.io/css/style.css">
+		<link rel="stylesheet" href="https://missedyou.github.io/css/highlight.css">
+
+		
+		<link rel="stylesheet" href="https://missedyou.github.io/css/font-awesome.min.css">
+		
+
+		
+		<link href="https://missedyou.github.io/index.xml" rel="alternate" type="application/rss+xml" title="site title" />
+		
+
+		
+	</head>
+
+    <body>
+       <nav class="main-nav">
+	
+	
+		<a href='https://missedyou.github.io/'> <span class="arrow">←</span>Home</a>
+	
+	<a href='https://missedyou.github.io/posts'>Archive</a>
+	<a href='https://missedyou.github.io/tags'>Tags</a>
+	<a href='https://missedyou.github.io/about'>About</a>
+
+	
+
+	
+	<a class="cta" href="https://missedyou.github.io/index.xml">Subscribe</a>
+	
+</nav>
+
+
+        <section id="wrapper" class="post">
+            <article>
+                <header>
+                    <h1>
+                        ssh免密登陆
+                    </h1>
+                    <h2 class="headline">
+                    Jul 16, 2017 09:44
+                    · 49 words
+                    · 1 minute read
+                      <span class="tags">
+                      
+                      
+                          
+                              <a href="https://missedyou.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8">服务器</a>
+                          
+                      
+                      
+                      </span>
+                    </h2>
+                </header>
+                
+                  
+                    <div id="toc">
+                      <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#清除ssh缓存">清除ssh缓存</a></li>
+<li><a href="#设置远程免密登录">设置远程免密登录:</a></li>
+<li><a href="#关于linux权限-数字权表示法">关于Linux权限(数字权表示法):</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+                    </div>
+                  
+                
+                <section id="post-body">
+                    <h3 id="清除ssh缓存">清除ssh缓存</h3>
+
+<blockquote>
+<ul>
+<li><p>远程连接服务器: <font color=#FF0000><code>ssh -p port name@ip</code></font></p></li>
+
+<li><p>清除ssh缓存 <code>ssh-keygen -R ip</code></p></li>
+</ul>
+</blockquote>
+
+<h3 id="设置远程免密登录">设置远程免密登录:</h3>
+
+<blockquote>
+<ul>
+<li>用scp将本地公钥传到服务器: <code>scp .ssh/id_rsa.pub root@ip:/root</code></li>
+<li>将公钥放到<code>.ssh/authorized_keys</code>文件夹下: <code>cat id_rsa.pub &gt;&gt; .ssh/authorized_keys</code></li>
+<li>更改权限: <code>chmod 600 .ssh/authorized_keys</code></li>
+<li>修改sshd配置: <code>vim /etc/ssh/sshd_config （PubkeyAuthentication no -&gt; yes）</code></li>
+<li>登陆服务器: <code>ssh root@ip</code></li>
+</ul>
+</blockquote>
+
+<h3 id="关于linux权限-数字权表示法">关于Linux权限(数字权表示法):</h3>
+
+<ol>
+<li>数字4、2、1分别代表读、写、执行, 即: r=4 w=2 x=1。</li>
+<li>按照用户身份可分成: 拥有则、群组、其他组。即: u、g、o</li>
+<li>对应用户为需要什么权限相加即可: rw=6、rwx=7</li>
+<li>使用命令行给某个文件夹/文件赋予三种身份对应的权限: chomd xxx fileName</li>
+</ol>
+                </section>
+            </article>
+
+            
+                <a class="twitter" href="https://twitter.com/intent/tweet?text=https%3a%2f%2fmissedyou.github.io%2fpost%2fssh%25E5%2585%258D%25E5%25AF%2586%25E7%2599%25BB%25E9%2599%2586%2f - ssh%e5%85%8d%e5%af%86%e7%99%bb%e9%99%86 "><span class="icon-twitter"> tweet</span></a>
+
+<a class="facebook" href="#" onclick="
+    window.open(
+      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+      'facebook-share-dialog',
+      'width=626,height=436');
+    return false;"><span class="icon-facebook-rect"> Share</span>
+</a>
+
+            
+
+            
+                <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'your_disqus_short_name'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+            
+
+            
+
+            <footer id="footer">
+    
+    <p class="small">
+    
+       © Copyright 2019 <i class="fa fa-heart" aria-hidden="true"></i> ch.chen
+    
+    </p>
+    <p class="small">
+        Powered by <a href="http://www.gohugo.io/">Hugo</a> Theme By <a href="https://github.com/nodejh/hugo-theme-cactus-plus">nodejh</a>
+    </p>
+</footer>
+
+        </section>
+
+        <script src="https://missedyou.github.io/js/jquery-3.3.1.min.js"></script>
+<script src="https://missedyou.github.io/js/main.js"></script>
+<script src="https://missedyou.github.io/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'your_google_analytics_id', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+
+
+
+    </body>
+</html>

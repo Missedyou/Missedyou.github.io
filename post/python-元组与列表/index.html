@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		 
+			
+  
+    <meta name="twitter:card" content="summary"/>
+    
+      <meta name="twitter:image" content="https://missedyou.github.io/images/avatar.png" />
+    
+  
+  
+  <meta name="twitter:title" content="Python-元组与列表"/>
+  <meta name="twitter:description" content=""/>
+  
+  
+  
+  
+    <meta name="twitter:creator" content="@ch.chen"/>
+  
+
+
+
+		
+		<meta name="author" content="ch.chen">
+		<meta name="description" content="Site Description">
+		<meta name="generator" content="Hugo 0.55.6" />
+		<title>Python-元组与列表 &middot; site title</title>
+		<link rel="shortcut icon" href="https://missedyou.github.io/images/favicon.ico">
+		<link rel="stylesheet" href="https://missedyou.github.io/css/style.css">
+		<link rel="stylesheet" href="https://missedyou.github.io/css/highlight.css">
+
+		
+		<link rel="stylesheet" href="https://missedyou.github.io/css/font-awesome.min.css">
+		
+
+		
+		<link href="https://missedyou.github.io/index.xml" rel="alternate" type="application/rss+xml" title="site title" />
+		
+
+		
+	</head>
+
+    <body>
+       <nav class="main-nav">
+	
+	
+		<a href='https://missedyou.github.io/'> <span class="arrow">←</span>Home</a>
+	
+	<a href='https://missedyou.github.io/posts'>Archive</a>
+	<a href='https://missedyou.github.io/tags'>Tags</a>
+	<a href='https://missedyou.github.io/about'>About</a>
+
+	
+
+	
+	<a class="cta" href="https://missedyou.github.io/index.xml">Subscribe</a>
+	
+</nav>
+
+
+        <section id="wrapper" class="post">
+            <article>
+                <header>
+                    <h1>
+                        Python-元组与列表
+                    </h1>
+                    <h2 class="headline">
+                    Mar 18, 2019 00:00
+                    · 206 words
+                    · 1 minute read
+                      <span class="tags">
+                      
+                      
+                          
+                              <a href="https://missedyou.github.io/tags/python-base">python-base</a>
+                          
+                      
+                      
+                      </span>
+                    </h2>
+                </header>
+                
+                  
+                    <div id="toc">
+                      <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#定义">定义</a></li>
+<li><a href="#性能差异-使用场景">性能差异、使用场景</a></li>
+<li><a href="#其它">其它</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+                    </div>
+                  
+                
+                <section id="post-body">
+                    <h3 id="定义">定义</h3>
+
+<blockquote>
+<ul>
+<li><p>共同点: 都是可以放置任何数据类型的有序集合, 且均支持切片操作、且可以嵌套、可以强制转换类型、有相同的内置功能函数。
+eg:</p>
+
+<pre><code class="language-Python">my_list = [1, 'a', '3', 4]
+my_tuple = (1, 'a', '3')
+my_list[0:1] # 输出[1]
+
+'''tips: 倒序切片'''
+my_list = [1, 2, 3]
+my_list[::-1] #输出[3, 2, 1]
+
+my_list = [1, 2, 3, 4]
+my_list.count(x) # 统计x出现的次数
+my_list.index(x) # 第一次出现x的数组下标, 若没有则抛出ValueError
+my_list.reverse() # 数组倒转
+my_list.sort() # 数组升序排列, 可选参数reverse=True 则为降序
+</code></pre>
+
+<ul>
+<li>区别: 列表是动态的可以增删改, 元组是静态的无法做出任何修改行为。
+eg:
+```Python
+my_list = [1]
+my_list.append(2)
+my_list.append(3)
+my_list[2] = 0
+del my_list[1]
+<br /></li>
+</ul>
+
+<p>my_list # 输出[1, 0]</p>
+
+<p>my_tuple = (1, 2)
+&ldquo;&lsquo;元组不允许修改因此下面这一行会报错: TypeError: &lsquo;tuple&rsquo; object does not support item assignment&rdquo;&rsquo;
+my_tuple[0] = 3</p>
+
+<p>&rdquo;&lsquo;初始化空数组占40个字节的内存空间, 而元组只需要24个字节, 因为数组是动态的需要储存额外的指针&rdquo;&rsquo;
+my_list = []
+my_tuple = ()
+my_list.<strong>siezof</strong>() # 40
+my_tuple.<strong>sizeof</strong>() # 24
+```</p></li>
+</ul>
+</blockquote>
+
+<h3 id="性能差异-使用场景">性能差异、使用场景</h3>
+
+<blockquote>
+<ul>
+<li>数组: 由于数据长度不固定, 因此每次新增或删除元素都要重新新增、减少对应的内存空间。</li>
+<li>元组: 长度固定、不可修改储存空间固定。</li>
+</ul>
+</blockquote>
+
+<pre><code class="language-Python">import timeit
+
+def create_list():
+    my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    return my_list
+
+def create_tuple():
+    my_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9)
+    return my_tuple
+'''由下可知初始化速度元组几乎是数组2倍'''
+print(timeit.timeit(stmt=create_list, number=10000)) # 0.203723
+print(timeit.timeit(stmt=create_tuple, number=10000)) # 0.087596
+
+'''索引速度比较, 可知几乎没有区别'''
+my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+my_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9)
+
+def get_list_value():
+    return my_list[3]
+
+def get_tuple_value():
+    return my_tuple[3]
+
+print(timeit.timeit(stmt=get_list_value, number=1000000)) # 0.12243271
+print(timeit.timeit(stmt=get_tuple_value, number=1000000)) # 0.12150498
+'''增删速度不做比较, 因为元组不可变要做增删需要新建额外一个元组 重新开辟一块内存空间因此必定比数组慢很多倍'''
+</code></pre>
+
+<blockquote>
+<ul>
+<li>使用场景</li>
+<li>若数据总量固定且不变那么使用元组性能更优</li>
+<li>若数据量是可变的那么使用数组</li>
+</ul>
+</blockquote>
+
+<h3 id="其它">其它</h3>
+
+<blockquote>
+<p>初始化数组时my_list = [] 往往比 my_list = list()快一些, 因为list()初始化数组需要进行一系列参数检查, 而[]直接调用底层C函数, 效率上会高很多。</p>
+</blockquote>
+                </section>
+            </article>
+
+            
+                <a class="twitter" href="https://twitter.com/intent/tweet?text=https%3a%2f%2fmissedyou.github.io%2fpost%2fpython-%25E5%2585%2583%25E7%25BB%2584%25E4%25B8%258E%25E5%2588%2597%25E8%25A1%25A8%2f - Python-%e5%85%83%e7%bb%84%e4%b8%8e%e5%88%97%e8%a1%a8 "><span class="icon-twitter"> tweet</span></a>
+
+<a class="facebook" href="#" onclick="
+    window.open(
+      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+      'facebook-share-dialog',
+      'width=626,height=436');
+    return false;"><span class="icon-facebook-rect"> Share</span>
+</a>
+
+            
+
+            
+                <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'your_disqus_short_name'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+            
+
+            
+
+            <footer id="footer">
+    
+    <p class="small">
+    
+       © Copyright 2019 <i class="fa fa-heart" aria-hidden="true"></i> ch.chen
+    
+    </p>
+    <p class="small">
+        Powered by <a href="http://www.gohugo.io/">Hugo</a> Theme By <a href="https://github.com/nodejh/hugo-theme-cactus-plus">nodejh</a>
+    </p>
+</footer>
+
+        </section>
+
+        <script src="https://missedyou.github.io/js/jquery-3.3.1.min.js"></script>
+<script src="https://missedyou.github.io/js/main.js"></script>
+<script src="https://missedyou.github.io/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'your_google_analytics_id', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+
+
+
+    </body>
+</html>

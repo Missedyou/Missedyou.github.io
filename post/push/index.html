@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		 
+			
+  
+    <meta name="twitter:card" content="summary"/>
+    
+      <meta name="twitter:image" content="https://missedyou.github.io/images/avatar.png" />
+    
+  
+  
+  <meta name="twitter:title" content="一条命令完成push"/>
+  <meta name="twitter:description" content=""/>
+  
+  
+  
+  
+    <meta name="twitter:creator" content="@ch.chen"/>
+  
+
+
+
+		
+		<meta name="author" content="ch.chen">
+		<meta name="description" content="Site Description">
+		<meta name="generator" content="Hugo 0.55.6" />
+		<title>一条命令完成push &middot; site title</title>
+		<link rel="shortcut icon" href="https://missedyou.github.io/images/favicon.ico">
+		<link rel="stylesheet" href="https://missedyou.github.io/css/style.css">
+		<link rel="stylesheet" href="https://missedyou.github.io/css/highlight.css">
+
+		
+		<link rel="stylesheet" href="https://missedyou.github.io/css/font-awesome.min.css">
+		
+
+		
+		<link href="https://missedyou.github.io/index.xml" rel="alternate" type="application/rss+xml" title="site title" />
+		
+
+		
+	</head>
+
+    <body>
+       <nav class="main-nav">
+	
+	
+		<a href='https://missedyou.github.io/'> <span class="arrow">←</span>Home</a>
+	
+	<a href='https://missedyou.github.io/posts'>Archive</a>
+	<a href='https://missedyou.github.io/tags'>Tags</a>
+	<a href='https://missedyou.github.io/about'>About</a>
+
+	
+
+	
+	<a class="cta" href="https://missedyou.github.io/index.xml">Subscribe</a>
+	
+</nav>
+
+
+        <section id="wrapper" class="post">
+            <article>
+                <header>
+                    <h1>
+                        一条命令完成push
+                    </h1>
+                    <h2 class="headline">
+                    Jul 17, 2017 10:27
+                    · 62 words
+                    · 1 minute read
+                      <span class="tags">
+                      
+                      
+                          
+                              <a href="https://missedyou.github.io/tags/git">git</a>
+                          
+                      
+                      
+                      </span>
+                    </h2>
+                </header>
+                
+                  
+                
+                <section id="post-body">
+                    <p>通常在完成一部分项目之后都会向代码仓库进行commit操作, 但是不论是敲命令行从<code>git add .</code>到<code>git push</code>还是在图形化洁面操作都较为繁琐。如果将git命令全都写在脚本中, 只需要传入commit内容作为参数就非常便捷。</p>
+
+<p>而将git命令封装成一个脚本需要用到python的自带库<code>subprocess</code>和<code>sys</code>。在项目建立与远程的连接后, 在项目的根目录创建一个<code>push.py</code>的文件, 具体代码如下:</p>
+
+<pre><code class="language-Python"># -*- coding:utf-8
+import subprocess
+import sys
+
+def push():
+    &quot;&quot;&quot;
+    用subprocess中的Popen方法执行git命令
+    shell=True代表将整个字符串作为命令并调用shell去执行
+    当为false时只接受字符串中的第一个元素作为命令,后面的作为参数执行shell命令
+    由于subprocess开启子进程都去执行自己的命令,而git命令执行需要先后顺序,
+    故而需要用wait阻塞等待上一个进程结束
+    &quot;&quot;&quot;
+    add = subprocess.Popen(&quot;git add .&quot;, shell=True)
+    add.wait()
+    
+    # 用sys模块接受外部参数作为commit的内容
+    commit_content = sys.argv[1]
+
+    commit = subprocess.Popen(&quot;git commit -m '%s'&quot;%commit_content, shell=True)
+    commit.wait()
+
+    push = subprocess.Popen(&quot;git push origin master&quot;, shell=True)
+
+
+if __name__ == '__main__':
+    push()
+</code></pre>
+
+<blockquote>
+<p>最后在项目更根目录执行命令: <code>python push.py &quot;commit content&quot;</code>即可。</p>
+</blockquote>
+                </section>
+            </article>
+
+            
+                <a class="twitter" href="https://twitter.com/intent/tweet?text=https%3a%2f%2fmissedyou.github.io%2fpost%2fpush%2f - %e4%b8%80%e6%9d%a1%e5%91%bd%e4%bb%a4%e5%ae%8c%e6%88%90push "><span class="icon-twitter"> tweet</span></a>
+
+<a class="facebook" href="#" onclick="
+    window.open(
+      'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),
+      'facebook-share-dialog',
+      'width=626,height=436');
+    return false;"><span class="icon-facebook-rect"> Share</span>
+</a>
+
+            
+
+            
+                <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'your_disqus_short_name'; 
+
+     
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+            
+
+            
+
+            <footer id="footer">
+    
+    <p class="small">
+    
+       © Copyright 2019 <i class="fa fa-heart" aria-hidden="true"></i> ch.chen
+    
+    </p>
+    <p class="small">
+        Powered by <a href="http://www.gohugo.io/">Hugo</a> Theme By <a href="https://github.com/nodejh/hugo-theme-cactus-plus">nodejh</a>
+    </p>
+</footer>
+
+        </section>
+
+        <script src="https://missedyou.github.io/js/jquery-3.3.1.min.js"></script>
+<script src="https://missedyou.github.io/js/main.js"></script>
+<script src="https://missedyou.github.io/js/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'your_google_analytics_id', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+
+
+
+
+    </body>
+</html>
