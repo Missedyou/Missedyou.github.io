@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>MySQL on site title</title>
+    <title>MySQL on ch.chen&#39;s blog</title>
     <link>https://missedyou.github.io/tags/mysql/</link>
-    <description>Recent content in MySQL on site title</description>
+    <description>Recent content in MySQL on ch.chen&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 09 Apr 2019 09:44:42 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jul 2019 09:44:42 +0800</lastBuildDate>
     
 	<atom:link href="https://missedyou.github.io/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>常见MySQL关键字</title>
-      <link>https://missedyou.github.io/post/%E5%B8%B8%E8%A7%81mysql%E5%85%B3%E9%94%AE%E5%AD%97/</link>
-      <pubDate>Tue, 09 Apr 2019 09:44:42 +0800</pubDate>
+      <title>SQL基础(一): 数据库、表的定义以及约束和设计原则</title>
+      <link>https://missedyou.github.io/post/sql%E5%9F%BA%E7%A1%80%E4%B8%80/</link>
+      <pubDate>Fri, 05 Jul 2019 09:44:42 +0800</pubDate>
       
-      <guid>https://missedyou.github.io/post/%E5%B8%B8%E8%A7%81mysql%E5%85%B3%E9%94%AE%E5%AD%97/</guid>
+      <guid>https://missedyou.github.io/post/sql%E5%9F%BA%E7%A1%80%E4%B8%80/</guid>
       <description></description>
     </item>
     

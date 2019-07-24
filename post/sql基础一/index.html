@@ -13,7 +13,7 @@
     
   
   
-  <meta name="twitter:title" content="Python-元组与列表"/>
+  <meta name="twitter:title" content="SQL基础(一): 数据库、表的定义以及约束和设计原则"/>
   <meta name="twitter:description" content=""/>
   
   
@@ -28,7 +28,7 @@
 		<meta name="author" content="ch.chen">
 		<meta name="description" content="Site Description">
 		<meta name="generator" content="Hugo 0.55.6" />
-		<title>Python-元组与列表 &middot; ch.chen&#39;s blog</title>
+		<title>SQL基础(一): 数据库、表的定义以及约束和设计原则 &middot; ch.chen&#39;s blog</title>
 		<link rel="shortcut icon" href="https://missedyou.github.io/images/favicon.ico">
 		<link rel="stylesheet" href="https://missedyou.github.io/css/style.css">
 		<link rel="stylesheet" href="https://missedyou.github.io/css/highlight.css">
@@ -66,17 +66,17 @@
             <article>
                 <header>
                     <h1>
-                        Python-元组与列表
+                        SQL基础(一): 数据库、表的定义以及约束和设计原则
                     </h1>
                     <h2 class="headline">
-                    Mar 18, 2019 00:00
-                    · 209 words
+                    Jul 5, 2019 09:44
+                    · 102 words
                     · 1 minute read
                       <span class="tags">
                       
                       
                           
-                              <a href="https://missedyou.github.io/tags/python-base">python-base</a>
+                              <a href="https://missedyou.github.io/tags/mysql">MySQL</a>
                           
                       
                       
@@ -90,12 +90,14 @@
 <ul>
 <li>
 <ul>
-<li>
+<li><a href="#1-数据库-表的创建-定义与修改">1. 数据库、表的创建、定义与修改</a></li>
+<li><a href="#2-约束">2. 约束</a>
 <ul>
-<li><a href="#1-定义">1. 定义</a></li>
-<li><a href="#2-性能差异-使用场景">2. 性能差异、使用场景</a></li>
-<li><a href="#3-其它">3. 其它</a></li>
+<li><a href="#2-1-主键约束">2.1 主键约束</a></li>
+<li><a href="#2-2-外键约束">2.2 外键约束</a></li>
+<li><a href="#2-3-唯一性-非空-默认值约束">2.3 唯一性、非空、默认值约束</a></li>
 </ul></li>
+<li><a href="#3-设计原则">3. 设计原则</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -103,104 +105,62 @@
                   
                 
                 <section id="post-body">
-                    <h3 id="1-定义">1. 定义</h3>
+                    <!--more-->
+
+<h2 id="1-数据库-表的创建-定义与修改">1. 数据库、表的创建、定义与修改</h2>
 
 <blockquote>
-<ul>
-<li><p>共同点: 都是可以放置任何数据类型的有序集合, 且均支持切片操作、且可以嵌套、可以强制转换类型、有相同的内置功能函数。
-eg:</p>
+<p>数据库的创建与删除</p>
 
-<pre><code class="language-Python">my_list = [1, 'a', '3', 4]
-my_tuple = (1, 'a', '3')
-my_list[0:1] # 输出[1]
+<pre><code class="language-sql">create table `mytable`; //创建一个名为mytable的数据库
 
-'''tips: 倒序切片'''
-my_list = [1, 2, 3]
-my_list[::-1] #输出[3, 2, 1]
-
-my_list = [1, 2, 3, 4]
-my_list.count(x) # 统计x出现的次数
-my_list.index(x) # 第一次出现x的数组下标, 若没有则抛出ValueError
-my_list.reverse() # 数组倒转
-my_list.sort() # 数组升序排列, 可选参数reverse=True 则为降序
+drop table `mytable`; //删除一个名为mytable的数据库
 </code></pre>
 
-<ul>
-<li>区别: 列表是动态的可以增删改, 元组是静态的无法做出任何修改行为。
-eg:
-```Python
-my_list = [1]
-my_list.append(2)
-my_list.append(3)
-my_list[2] = 0
-del my_list[1]
-<br /></li>
-</ul>
+<p>表的创建</p>
 
-<p>my_list # 输出[1, 0]</p>
+<pre><code class="language-sql">create table `table_name`; //不定义具体表结构
 
-<p>my_tuple = (1, 2)
-&ldquo;&lsquo;元组不允许修改因此下面这一行会报错: TypeError: &lsquo;tuple&rsquo; object does not support item assignment&rdquo;&rsquo;
-my_tuple[0] = 3</p>
-
-<p>&rdquo;&lsquo;初始化空数组占40个字节的内存空间, 而元组只需要24个字节, 因为数组是动态的需要储存额外的指针&rdquo;&rsquo;
-my_list = []
-my_tuple = ()
-my_list.<strong>siezof</strong>() # 40
-my_tuple.<strong>sizeof</strong>() # 24
-```</p></li>
-</ul>
-</blockquote>
-
-<h3 id="2-性能差异-使用场景">2. 性能差异、使用场景</h3>
-
-<blockquote>
-<ul>
-<li>数组: 由于数据长度不固定, 因此每次新增或删除元素都要重新新增、减少对应的内存空间。</li>
-<li>元组: 长度固定、不可修改储存空间固定。</li>
-</ul>
-</blockquote>
-
-<pre><code class="language-Python">import timeit
-
-def create_list():
-    my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    return my_list
-
-def create_tuple():
-    my_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9)
-    return my_tuple
-'''由下可知初始化速度元组几乎是数组2倍'''
-print(timeit.timeit(stmt=create_list, number=10000)) # 0.203723
-print(timeit.timeit(stmt=create_tuple, number=10000)) # 0.087596
-
-'''索引速度比较, 可知几乎没有区别'''
-my_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-my_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9)
-
-def get_list_value():
-    return my_list[3]
-
-def get_tuple_value():
-    return my_tuple[3]
-
-print(timeit.timeit(stmt=get_list_value, number=1000000)) # 0.12243271
-print(timeit.timeit(stmt=get_tuple_value, number=1000000)) # 0.12150498
-'''增删速度不做比较, 因为元组不可变要做增删需要新建额外一个元组 重新开辟一块内存空间因此必定比数组慢很多倍'''
+create table `table_name`(
+    `id` int(11) not null auto_increment, //非空, 自增
+    `name` varchar(255) not null,
+    primary key(`id`) //定义主键
+)default charset=utf8; // 声明编码方式
 </code></pre>
 
-<blockquote>
-<ul>
-<li>使用场景</li>
-<li>若数据总量固定且不变那么使用元组性能更优</li>
-<li>若数据量是可变的那么使用数组</li>
-</ul>
+<p>修改表结构</p>
+
+<pre><code class="language-sql">alter table my_table add (my_column int(11)); //新增字段
+alter table my_table rename column my_column to new_column_name; //修改字段名称
+alter table my_table modify my_column float(3, 2); //修改字段属性
+alter table my_table drop column my_column; //删除字段
+</code></pre>
 </blockquote>
 
-<h3 id="3-其它">3. 其它</h3>
+<h2 id="2-约束">2. 约束</h2>
+
+<h3 id="2-1-主键约束">2.1 主键约束</h3>
 
 <blockquote>
-<p>初始化数组时my_list = [] 往往比 my_list = list()快一些, 因为list()初始化数组需要进行一系列参数检查, 而[]直接调用底层C函数, 效率上会高很多。</p>
+<p>主键是表记录的唯一标识, 不能重复、不可为空即: unique + not null。 主键通常是一个字段, 也可以是多个字段复核而成。</p>
+</blockquote>
+
+<h3 id="2-2-外键约束">2.2 外键约束</h3>
+
+<blockquote>
+<p>外键是为了确保表与表之间引用的完整性, 一张表中的外键对应另一张表中的主键, 外键是可重复的也可为空。(外键会影响insert的速度会造成性能问题, 因此在实际业务中几乎不会使用外键, 外键的功能通常在业务代码中实现)</p>
+</blockquote>
+
+<h3 id="2-3-唯一性-非空-默认值约束">2.3 唯一性、非空、默认值约束</h3>
+
+<blockquote>
+<p>除了对主键有unique、not null约束之外, 也可以对其他字段进行unique、not null定义, 同时可以对字段给与默认值即<code>default 0.00</code>。</p>
+</blockquote>
+
+<h2 id="3-设计原则">3. 设计原则</h2>
+
+<blockquote>
+<p>数据库的设计原则源于E-R图(Entity Relationship Diagram), 表数量越少、字段越少越易于操作。</p>
 </blockquote>
                 </section>
             </article>
