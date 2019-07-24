@@ -70,7 +70,7 @@
                     </h1>
                     <h2 class="headline">
                     Jul 24, 2019 09:44
-                    · 158 words
+                    · 142 words
                     · 1 minute read
                       <span class="tags">
                       
@@ -144,15 +144,27 @@ select my_column from my_table order by column1, column2 desc limit 1;
 
 <h3 id="3-2-语句执行顺序">3.2 语句执行顺序</h3>
 
-<p><code>FROM &gt; WHERE &gt; GROUP BY &gt; HAVING &gt; SELECT 的字段 &gt; DISTINCT &gt; ORDER BY &gt; LIMIT</code>
-&gt; 1. 首先SQL会执行from, 若是多表联查则会cross join求出笛卡尔积得到虚拟表vt-1
-&gt; 2. 然后通过join on 语句筛选得到虚拟表vt-2
-&gt; 3. 如果使用了左右连接和全连接则就会涉及到外部行，也就是在虚拟表 vt-2 的基础上增加外外部行得到虚拟表vt-3(外部行, 暂时不理解)
-&gt; 4. 执行where条件进一步筛选得到虚拟表vt-4
-&gt; 5. 接着执行group having对数据进行分组和分组筛选得到虚拟表vt-5
-&gt; 6. 接着执行select、distinct去除多余字段和去重得到虚拟表vt-6
-&gt; 7. 然后执行order by对数据排序得到虚拟表vt-7
-&gt; 8. 最后limit限制返回数量得到最终的虚拟表vt-8也就是查询语句的执行结果</p>
+<p><code>FROM &gt; WHERE &gt; GROUP BY &gt; HAVING &gt; SELECT 的字段 &gt; DISTINCT &gt; ORDER BY &gt; LIMIT</code></p>
+
+<blockquote>
+<ol>
+<li><p>首先SQL会执行from, 若是多表联查则会cross join求出笛卡尔积得到虚拟表vt-1</p></li>
+
+<li><p>然后通过join on 语句筛选得到虚拟表vt-2</p></li>
+
+<li><p>如果使用了左右连接和全连接则就会涉及到外部行，也就是在虚拟表 vt-2 的基础上增加外外部行得到虚拟表vt-3(外部行, 暂时不理解)</p></li>
+
+<li><p>执行where条件进一步筛选得到虚拟表vt-4</p></li>
+
+<li><p>接着执行group having对数据进行分组和分组筛选得到虚拟表vt-5</p></li>
+
+<li><p>接着执行select、distinct去除多余字段和去重得到虚拟表vt-6</p></li>
+
+<li><p>然后执行order by对数据排序得到虚拟表vt-7</p></li>
+
+<li><p>最后limit限制返回数量得到最终的虚拟表vt-8也就是查询语句的执行结果</p></li>
+</ol>
+</blockquote>
                 </section>
             </article>
 
