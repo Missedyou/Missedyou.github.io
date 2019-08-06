@@ -70,8 +70,8 @@
                     </h1>
                     <h2 class="headline">
                     Jul 24, 2019 09:44
-                    · 360 words
-                    · 2 minute read
+                    · 463 words
+                    · 3 minute read
                       <span class="tags">
                       
                       
@@ -102,6 +102,17 @@
 <li><a href="#4-1-算数函数">4.1 算数函数</a></li>
 <li><a href="#4-2-字符串函数">4.2 字符串函数</a></li>
 <li><a href="#4-3-日期函数">4.3 日期函数</a></li>
+<li><a href="#4-4-数据类型转换">4.4 数据类型转换</a></li>
+<li><a href="#4-5-聚集函数">4.5 聚集函数</a></li>
+</ul></li>
+<li><a href="#5-分组">5. 分组</a>
+<ul>
+<li><a href="#5-1-定义">5.1 定义</a></li>
+<li><a href="#5-2-语法">5.2 语法</a></li>
+</ul></li>
+<li><a href="#6-子查询">6. 子查询</a>
+<ul>
+<li><a href="#6-1-定义">6.1 定义</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -236,7 +247,57 @@ select current_time; //打印当前系统时间
 
 # 当前系统时间: current_timestamp yy-mm-dd hh:mm:ss
 select current_timestamp;
+
+# 抽取具体年月日extract、date、year、month、day、hour、minute、second
+select extract(year from my_time); // 获取my_time的年字段
+select date('2019-04-01 12:00:05'); // 2019-04-01
+select year('2019-08-09'); // 2019
 </code></pre>
+
+<h3 id="4-4-数据类型转换">4.4 数据类型转换</h3>
+
+<pre><code class="language-sql"># cast() 通过as分割两个参数, 前者为原始数据后者为目标数据类型
+select cast(1.22 as decimal(8, 1)); // 1.2
+
+# coalesce() 返回元组内第一个非空数值
+select coalesce(null, 1); // 1
+</code></pre>
+
+<h3 id="4-5-聚集函数">4.5 聚集函数</h3>
+
+<pre><code class="language-sql"># count() 统计某个字段的数量
+select count(*) from my_table; // 统计my_table中所有记录的行数
+
+# 某一列的最大、最小、总和、平均值 max() min() sum() avg()
+select avg(age) from my_table; // 求平均年龄
+</code></pre>
+
+<h2 id="5-分组">5. 分组</h2>
+
+<h3 id="5-1-定义">5.1 定义</h3>
+
+<blockquote>
+<p>对数据根据某个字段分组统计</p>
+</blockquote>
+
+<h3 id="5-2-语法">5.2 语法</h3>
+
+<pre><code class="language-sql">select count(*) from my_table group by age; // 根据年龄分组
+
+# 多个分组条件时条件过滤 having, having只真对分组
+select count(*) from my_table group by age, gender having age&gt;20; // 统计年龄大于20各个年龄阶段不同性别的人数
+
+# 再次提一下SQL的顺序
+select..from..where..group by..having..order by..;
+</code></pre>
+
+<h2 id="6-子查询">6. 子查询</h2>
+
+<h3 id="6-1-定义">6.1 定义</h3>
+
+<blockquote>
+<p>子查询即是嵌套查询。</p>
+</blockquote>
                 </section>
             </article>
 
